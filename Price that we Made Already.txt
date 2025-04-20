@@ -1,0 +1,21 @@
+Product Prices(₱): 259, 5, 5, 5
+Tax(₱): 3.4
+
+Sorted Possible Total Prices (with Detailed Calculation):
+Set 1: Product 2 (₱5.00) = ₱5.00 + ₱3.40 tax = ₱8.40
+Set 2: Product 2 (₱5.00) + Product 3 (₱5.00) = ₱10.00 + ₱3.40 tax = ₱13.40
+Set 3: Product 2 (₱5.00) + Product 3 (₱5.00) + Product 4 (₱5.00) = ₱15.00 + ₱3.40 tax = ₱18.40
+Set 4: Product 1 (₱259.00) = ₱259.00 + ₱3.40 tax = ₱262.40
+Set 5: Product 1 (₱259.00) + Product 2 (₱5.00) = ₱264.00 + ₱3.40 tax = ₱267.40
+Set 6: Product 1 (₱259.00) + Product 2 (₱5.00) + Product 3 (₱5.00) = ₱269.00 + ₱3.40 tax = ₱272.40
+Set 7: Product 1 (₱259.00) + Product 2 (₱5.00) + Product 3 (₱5.00) + Product 4 (₱5.00) = ₱274.00 + ₱3.40 tax = ₱277.40
+
+Sorted Possible Total Prices (No Calculation, Only Total with Tax):
+
+Set 1: Total = ₱8.40
+Set 2: Total = ₱13.40
+Set 3: Total = ₱18.40
+Set 4: Total = ₱262.40
+Set 5: Total = ₱267.40
+Set 6: Total = ₱272.40
+Set 7: Total = ₱277.40

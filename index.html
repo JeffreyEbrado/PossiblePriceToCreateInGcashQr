@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sorted Price Combinations with Tax (Fixed Amount)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px 0;
+      padding: 8px;
+      font-size: 14px;
+    }
+    #result {
+      margin-top: 20px;
+    }
+    .price-item {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sorted Product Price Combinations with Tax (Fixed Amount)</h1>
+
+  <label for="prices">Enter product prices (comma-separated):</label><br>
+  <input type="text" id="prices" placeholder="e.g. 259, 5, 5, 5" value="259, 5, 5, 5"><br>
+
+  <label for="tax">Enter tax amount (₱):</label><br>
+  <input type="number" id="tax" placeholder="e.g. 3.4" value="3.4"><br>
+
+  <button onclick="calculateCombinations()">Calculate & Sort Combinations</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateCombinations() {
+      const pricesInput = document.getElementById("prices").value;
+      const pricesArray = pricesInput.split(",").map(p => parseFloat(p.trim())).filter(p => !isNaN(p));
+      const taxAmount = parseFloat(document.getElementById("tax").value);
+
+      if (pricesArray.length === 0 || isNaN(taxAmount)) {
+        alert("Please enter valid product prices and tax amount.");
+        return;
+      }
+
+      let combinations = [];
+      const numCombinations = Math.pow(2, pricesArray.length);
+
+      for (let i = 1; i < numCombinations; i++) {
+        let combination = [];
+        let subtotal = 0;
+
+        for (let j = 0; j < pricesArray.length; j++) {
+          if (i & (1 << j)) {
+            combination.push(`Product ${j + 1} (₱${pricesArray[j].toFixed(2)})`);
+            subtotal += pricesArray[j];
+          }
+        }
+
+        const totalWithTax = subtotal + taxAmount;
+        combinations.push({
+          description: combination.join(" + "),
+          subtotal: subtotal,
+          totalWithTax: totalWithTax
+        });
+      }
+
+      // Sort combinations from lowest to highest totalWithTax
+      combinations.sort((a, b) => a.totalWithTax - b.totalWithTax);
+
+      // Filter out duplicates based on totalWithTax value
+      const uniqueCombinations = [];
+      let seenTotals = new Set();
+
+      combinations.forEach((combo) => {
+        if (!seenTotals.has(combo.totalWithTax)) {
+          seenTotals.add(combo.totalWithTax);
+          uniqueCombinations.push(combo);
+        }
+      });
+
+      // Build result HTML for both sections
+      let resultHTML = "<h3>Sorted Possible Total Prices (with Detailed Calculation):</h3>";
+
+      uniqueCombinations.forEach((combo, index) => {
+        resultHTML += `<div class="price-item"><strong>Set ${index + 1}</strong>: ${combo.description} = ₱${combo.subtotal.toFixed(2)} + ₱${taxAmount.toFixed(2)} tax = <strong>₱${combo.totalWithTax.toFixed(2)}</strong></div>`;
+      });
+
+      resultHTML += "<h3>Sorted Possible Total Prices (No Calculation, Only Total with Tax):</h3>";
+
+      uniqueCombinations.forEach((combo, index) => {
+        resultHTML += `<div class="price-item"><strong>Set ${index + 1}</strong>: Total = ₱${combo.totalWithTax.toFixed(2)}</div>`;
+      });
+
+      document.getElementById("result").innerHTML = resultHTML;
+    }
+  </script>
+
+</body>
+</html>
